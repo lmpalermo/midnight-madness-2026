@@ -15,12 +15,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Test trivia game
-        run: node --test trivia.test.js
+      - name: Test party games
+        run: node --test trivia.test.js charades.test.js
       - name: Prepare public website files
         run: |
           mkdir -p public
-          cp index.html tv.html game.html style.css site.js trivia.js game.js public/
+          cp index.html tv.html game.html style.css site.js trivia.js game.js charades.html charades-rules.js charades.js public/
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
