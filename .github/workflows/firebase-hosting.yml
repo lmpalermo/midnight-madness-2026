@@ -16,11 +16,11 @@ jobs:
         with:
           node-version: '22'
       - name: Test party games
-        run: node --test trivia.test.js charades.test.js
+        run: node --test trivia.test.js charades.test.js roulette.test.js
       - name: Prepare public website files
         run: |
           mkdir -p public
-          cp index.html tv.html game.html style.css site.js trivia.js game.js charades.html charades-rules.js charades.js public/
+          cp index.html tv.html game.html style.css site.js trivia.js game.js charades.html charades-rules.js charades.js roulette.html roulette-rules.js roulette.js public/
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
