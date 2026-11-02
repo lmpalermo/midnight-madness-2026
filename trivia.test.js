@@ -1,0 +1,5 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const T=require('./trivia');
+test('game is valid and deck has no repeated clues',()=>{for(const n of [6,12,24]){const s=T.newGame(['A','B'],n);assert(T.valid(s));assert.equal(s.deck.length,n);assert.equal(new Set(s.deck).size,n);}});
+test('points require reveal, toggle once, and preserve other teams',()=>{let s=T.newGame(['A','B']);assert.deepEqual(T.award(s,0),s);s.phase='answer';s=T.award(s,0);assert.equal(s.teams[0].score,1);s=T.award(s,1);s=T.award(s,0);assert.equal(s.teams[0].score,0);assert.equal(s.teams[1].score,1);assert(T.valid(s));});
+test('complete game keeps scores and ends on final clue',()=>{let s=T.newGame(['A','B'],6);for(let i=0;i<6;i++){s.phase='answer';s=T.award(s,0);s=T.next(s);assert(T.valid(s));}assert.equal(s.phase,'finished');assert.equal(s.teams[0].score,6);assert.equal(s.index,5);});
+test('reject corrupt saved progress',()=>{assert(!T.valid(null));let s=T.newGame(['A']);assert(!T.valid({...s,deck:[999]}));assert(!T.valid({...s,index:-1}));assert(!T.valid({...s,deadline:'tomorrow'}));assert(!T.valid({...s,teams:[{id:0,name:'A',score:-1}]}));});
